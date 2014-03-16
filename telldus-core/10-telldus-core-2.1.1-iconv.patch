@@ -1,0 +1,20 @@
+diff -Naur telldus-core-2.1.1/common/CMakeLists.txt telldus-core-2.1.1.patch/common/CMakeLists.txt
+--- telldus-core-2.1.1/common/CMakeLists.txt	2012-02-03 16:18:15.000000000 +0100
++++ telldus-core-2.1.1.patch/common/CMakeLists.txt	2013-12-30 17:44:34.660077209 +0100
+@@ -64,12 +64,16 @@
+ 	)
+ ELSE (APPLE)
+ 	#### Linux ####
++	FIND_LIBRARY(ICONV_LIBRARY iconv)
+ 	ADD_DEFINITIONS( -D_LINUX )
+ 	LIST(APPEND  telldus-common_SRCS
+ 		Event_unix.cpp
+ 		EventHandler_unix.cpp
+ 		Socket_unix.cpp
+ 	)
++	LIST(APPEND telldus-common_LIBRARIES
++		${ICONV_LIBRARY}
++	)
+ ENDIF (APPLE)
+ 
+ 

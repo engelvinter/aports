@@ -1,0 +1,14 @@
+#!/sbin/runscript
+
+description="The telldus daemon"
+command="/usr/sbin/telldusd"
+procname="telldusd"
+pidfile="/var/run/telldusd.pid"
+
+start() {
+    ebegin "Starting ${procname}"
+    start-stop-daemon --start \
+        --exec ${command} \
+        --pidfile ${pidfile}
+    eend $?
+}

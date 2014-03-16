@@ -1,0 +1,42 @@
+# Contributor:
+# Maintainer:
+pkgname=py-werkzeug
+_realname=Werkzeug
+pkgver=0.9.4
+pkgrel=1
+pkgdesc="The Swiss Army knife of Python web development"
+url="http://werkzeug.pocoo.org/"
+arch="all"
+license="BSD"
+depends="python"
+depends_dev=""
+makedepends="python-dev"
+install=""
+subpackages=""
+source="http://pypi.python.org/packages/source/${_realname:0:1}/$_realname/$_realname-$pkgver.tar.gz"
+
+_builddir="$srcdir"/$_realname-$pkgver
+
+prepare() {
+	local i
+	cd "$_builddir"
+	for i in $source; do
+		case $i in
+		*.patch) msg $i; patch -p1 -i "$srcdir"/$i || return 1;;
+		esac
+	done
+}
+
+build() {
+	cd "$_builddir"
+	python setup.py build || return 1
+}
+
+package() {
+	cd "$_builddir"
+	python setup.py install --prefix=/usr --root="$pkgdir" || return 1
+}
+
+md5sums="670fad41f57c13b71a6816765765a3dd  Werkzeug-0.9.4.tar.gz"
+sha256sums="c1baf7a3e8be70f34d931ee173283f406877bd3d17f372bbe82318a5b3c510cc  Werkzeug-0.9.4.tar.gz"
+sha512sums="3d43ecac7c4a710bb22a0b829925d0913ac36b98e63ee1000221b724f9f06d92f98716194f26fb762b2ba99cbb82b9d23ff4d23dbf9ac154063452c56f6290dd  Werkzeug-0.9.4.tar.gz"

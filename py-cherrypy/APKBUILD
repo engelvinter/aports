@@ -1,0 +1,42 @@
+# Contributor:
+# Maintainer:
+pkgname=py-cherrypy
+_realname=CherryPy
+pkgver=3.2.4
+pkgrel=1
+pkgdesc="CherryPy Web Framework"
+url="http://www.cherrypy.org"
+arch="all"
+license="BSD"
+depends="python"
+depends_dev=""
+makedepends="python-dev"
+install=""
+subpackages=""
+source="http://pypi.python.org/packages/source/${_realname:0:1}/$_realname/$_realname-$pkgver.tar.gz"
+
+_builddir="$srcdir"/$_realname-$pkgver
+
+prepare() {
+	local i
+	cd "$_builddir"
+	for i in $source; do
+		case $i in
+		*.patch) msg $i; patch -p1 -i "$srcdir"/$i || return 1;;
+		esac
+	done
+}
+
+build() {
+	cd "$_builddir"
+	python setup.py build || return 1
+}
+
+package() {
+	cd "$_builddir"
+	python setup.py install --prefix=/usr --root="$pkgdir" || return 1
+}
+
+md5sums="e2c8455e15c39c9d60e0393c264a4d16  CherryPy-3.2.4.tar.gz"
+sha256sums="abd73a449936740e99d3a05eb89b9381dc188ef696904f585463bc28079f1288  CherryPy-3.2.4.tar.gz"
+sha512sums="f559630ba23b88edb1c9085cd0b916c816d2f6b51fde17ad3c617bf2da49f37874d603bab2b3763e9329ca283fc6a08b68a76911f40901ed09d3f6222b95e033  CherryPy-3.2.4.tar.gz"

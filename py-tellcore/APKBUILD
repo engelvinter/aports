@@ -1,0 +1,42 @@
+# Contributor:
+# Maintainer:
+pkgname=py-tellcore
+_realname=tellcore-py
+pkgver=1.0.1
+pkgrel=1
+pkgdesc="Python wrapper around the tellcore library"
+url="https://github.com/erijo/tellcore-py"
+arch="all"
+license="GPL"
+depends="python"
+depends_dev=""
+makedepends="python-dev"
+install=""
+subpackages=""
+source="http://pypi.python.org/packages/source/${_realname:0:1}/$_realname/$_realname-$pkgver.tar.gz"
+
+_builddir="$srcdir"/$_realname-$pkgver
+
+prepare() {
+	local i
+	cd "$_builddir"
+	for i in $source; do
+		case $i in
+		*.patch) msg $i; patch -p1 -i "$srcdir"/$i || return 1;;
+		esac
+	done
+}
+
+build() {
+	cd "$_builddir"
+	python setup.py build || return 1
+}
+
+package() {
+	cd "$_builddir"
+	python setup.py install --prefix=/usr --root="$pkgdir" || return 1
+}
+
+md5sums="2addc4bddb2d0e0872dee62769bbb8c6  tellcore-py-1.0.1.tar.gz"
+sha256sums="0987e6e4092ebc21377bb0129fab9a9284cd31c1a4830b5d4f982479105856c1  tellcore-py-1.0.1.tar.gz"
+sha512sums="dd0a5f05559756d401277f99cf9ca585aeed48806294af279c091d66b642d5298b909c9f1b83ba52a2c57423cd240bc9928b352309bce64f0bf84edbccdb7856  tellcore-py-1.0.1.tar.gz"

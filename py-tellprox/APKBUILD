@@ -1,0 +1,42 @@
+# Contributor:
+# Maintainer:
+pkgname=py-tellprox
+_realname=tellprox
+pkgver=0.0.0
+pkgrel=1
+pkgdesc="A local server to use in place of Tellstick Live"
+url="https://github.com/engelvinter/tellprox"
+arch="all"
+license="GPL"
+depends="python py-cherrypy py-tellcore py-werkzeug py-beaker"
+depends_dev=""
+makedepends="python-dev py-setuptools"
+install=""
+subpackages=""
+source="https://github.com/engelvinter/$_realname/archive/master.zip"
+
+_builddir="$srcdir"/$_realname-master
+
+prepare() {
+	local i
+	cd "$_builddir"
+	for i in $source; do
+		case $i in
+		*.patch) msg $i; patch -p1 -i "$srcdir"/$i || return 1;;
+		esac
+	done
+}
+
+build() {
+	cd "$_builddir"
+	python setup.py build || return 1
+}
+
+package() {
+	cd "$_builddir"
+	python setup.py install --prefix=/usr --root="$pkgdir" || return 1
+}
+
+md5sums="18e92805b218638f9090e590c5568af2  master.zip"
+sha256sums="f34e7b2852f7cdd0f9c89a68f6a281492b61c8a954108e757de55bcdd86febdc  master.zip"
+sha512sums="bbeef6cca722bfc57238e02428d7334df55f87244d1d6c711eaf1ab23bb966e6449a0677b7c828c6dfc7afc8cf20b77fd76ebc8fb53ed6a8edd19b40cdd952a5  master.zip"

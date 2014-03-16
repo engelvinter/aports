@@ -1,0 +1,7 @@
+#!/bin/sh
+
+addgroup -S telldus 2>/dev/null
+adduser -S -s /sbin/nologin -D -H -h /dev/null -G telldus -g "telldusd user" telldus 2>/dev/null
+
+# return with success even if user already exist
+exit 0

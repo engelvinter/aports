@@ -1,0 +1,14 @@
+diff -Nuar telldus-core-2.1.1/tdadmin/CMakeLists.txt telldus-core-2.1.1.patch/tdadmin/CMakeLists.txt
+--- telldus-core-2.1.1/tdadmin/CMakeLists.txt	2012-02-03 16:18:15.000000000 +0100
++++ telldus-core-2.1.1.patch/tdadmin/CMakeLists.txt	2013-12-30 19:58:31.500282993 +0100
+@@ -38,8 +38,10 @@
+ 		${ARGP_LIBRARY}
+ 	)
+ ELSE (WIN32)
++	FIND_LIBRARY(ARGP_LIBRARY argp)
+ 	TARGET_LINK_LIBRARIES(tdadmin
+ 		${CMAKE_BINARY_DIR}/client/libtelldus-core.so
++		${ARGP_LIBRARY}
+ 	)
+ ENDIF (WIN32)
+ 

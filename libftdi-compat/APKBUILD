@@ -1,0 +1,41 @@
+# $Id$
+# Maintainer:
+
+pkgname=libftdi-compat
+pkgver=0.20
+pkgrel=1
+pkgdesc="A library to talk to FTDI chips"
+arch=all
+url="http://www.intra2net.com/en/developer/libftdi/download.php"
+license=GPL2
+options="libtool"
+depends="libusb-compat"
+makedepends="cmake pkgconfig libusb-compat-dev"
+subpackages="$pkgname-dev"
+source=http://www.intra2net.com/en/developer/libftdi/download/libftdi-$pkgver.tar.gz
+
+_builddir="$srcdir"/libftdi-$pkgver
+
+prepare() {
+        local i
+        cd "$_builddir"
+        for i in $source; do
+                case $i in
+                *.patch) msg $i; patch -p1 -i "$srcdir"/$i || return 1;;
+                esac
+        done
+}
+
+build() {
+  cd "$_builddir"
+  ./configure --prefix=/usr --without-examples
+  make
+}
+
+package() {
+  cd  "$_builddir"
+  make DESTDIR="$pkgdir" install
+}
+md5sums="355d4474e3faa81b485d6a604b06951f  libftdi-0.20.tar.gz"
+sha256sums="3176d5b5986438f33f5208e690a8bfe90941be501cc0a72118ce3d338d4b838e  libftdi-0.20.tar.gz"
+sha512sums="540e5eb201a65936c3dbabff70c251deba1615874b11ff27c5ca16c39d71c150cf61758a68b541135a444fe32ab403b0fba0daf55c587647aaf9b3f400f1dee7  libftdi-0.20.tar.gz"
